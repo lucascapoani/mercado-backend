@@ -11,35 +11,35 @@ import { ItemPedido } from '../pedidos/item-pedido.entity';
 @Entity('produtos')
 export class Produto {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ length: 150 })
-  nome: string;
+  nome!: string;
 
   @Column({ length: 500, nullable: true })
-  descricao: string;
+  descricao!: string;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  preco: number;
+  preco!: number;
 
   @Column({ default: 0 })
-  estoque: number;
+  estoque!: number;
 
   @Column({ length: 50, nullable: true })
-  unidade: string;
+  unidade!: string;
 
   @Column({ default: true })
-  ativo: boolean;
+  ativo!: boolean;
 
   @ManyToOne(() => Categoria, (categoria) => categoria.produtos, {
     nullable: false,
     eager: false,
   })
-  categoria: Categoria;
+  categoria!: Categoria;
 
   @Column()
-  categoriaId: number;
+  categoriaId!: number;
 
   @OneToMany(() => ItemPedido, (item) => item.produto)
-  itensPedido: ItemPedido[];
+  itensPedido!: ItemPedido[];
 }

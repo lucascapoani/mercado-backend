@@ -10,29 +10,29 @@ import { Pedido } from './pedido.entity';
 @Entity('itens_pedido')
 export class ItemPedido {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => Pedido, (pedido) => pedido.itens, { nullable: false })
-  pedido: Pedido;
+  pedido!: Pedido;
 
   @Column()
-  pedidoId: number;
+  pedidoId!: number;
 
   @ManyToOne(() => Produto, (produto) => produto.itensPedido, {
     nullable: false,
     eager: true,
   })
-  produto: Produto;
+  produto!: Produto;
 
   @Column()
-  produtoId: number;
+  produtoId!: number;
 
   @Column()
-  quantidade: number;
+  quantidade!: number;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  precoUnitario: number;
+  precoUnitario!: number;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  subtotal: number;
+  subtotal!: number;
 }

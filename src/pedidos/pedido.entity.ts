@@ -14,35 +14,35 @@ import { StatusPedido } from './status-pedido.enum';
 @Entity('pedidos')
 export class Pedido {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => Cliente, (cliente) => cliente.pedidos, { nullable: false })
-  cliente: Cliente;
+  cliente!: Cliente;
 
   @Column()
-  clienteId: number;
+  clienteId!: number;
 
   @OneToMany(() => ItemPedido, (item) => item.pedido, {
     cascade: true,
     eager: true,
   })
-  itens: ItemPedido[];
+  itens!: ItemPedido[];
 
   @Column('decimal', { precision: 10, scale: 2, default: 0 })
-  total: number;
+  total!: number;
 
   @Column({
     type: 'varchar',
     default: StatusPedido.ABERTO,
   })
-  status: StatusPedido;
+  status!: StatusPedido;
 
   @Column({ length: 500, nullable: true })
-  observacao: string;
+  observacao!: string;
 
   @CreateDateColumn()
-  criadoEm: Date;
+  criadoEm!: Date;
 
   @UpdateDateColumn()
-  atualizadoEm: Date;
+  atualizadoEm!: Date;
 }
