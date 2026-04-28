@@ -1,0 +1,6 @@
+export enum StatusPedido {
+  ABERTO = 'ABERTO',
+  CONFIRMADO = 'CONFIRMADO',
+  ENTREGUE = 'ENTREGUE',
+  CANCELADO = 'CANCELADO',
+}
