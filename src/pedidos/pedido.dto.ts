@@ -18,26 +18,26 @@ export class ItemPedidoDto {
   @ApiProperty({ example: 1, description: 'ID do produto' })
   @IsInt()
   @IsPositive()
-  produtoId: number;
+  produtoId!: number;
 
   @ApiProperty({ example: 2, description: 'Quantidade desejada' })
   @IsInt()
   @IsPositive()
-  quantidade: number;
+  quantidade!: number;
 }
 
 export class CreatePedidoDto {
   @ApiProperty({ example: 1, description: 'ID do cliente' })
   @IsInt()
   @IsPositive()
-  clienteId: number;
+  clienteId!: number;
 
   @ApiProperty({ type: [ItemPedidoDto], description: 'Itens do pedido' })
   @IsArray()
   @ArrayMinSize(1, { message: 'O pedido deve ter ao menos um item' })
   @ValidateNested({ each: true })
   @Type(() => ItemPedidoDto)
-  itens: ItemPedidoDto[];
+  itens!: ItemPedidoDto[];
 
   @ApiPropertyOptional({ example: 'Entregar na portaria' })
   @IsOptional()
@@ -52,5 +52,5 @@ export class AtualizarStatusDto {
   @IsEnum(StatusPedido, {
     message: `Status deve ser um dos valores: ${Object.values(StatusPedido).join(', ')}`,
   })
-  status: StatusPedido;
+  status!: StatusPedido;
 }

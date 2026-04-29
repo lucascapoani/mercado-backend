@@ -16,7 +16,7 @@ export class CreateProdutoDto {
   @IsNotEmpty()
   @IsString()
   @MaxLength(150)
-  nome: string;
+  nome!: string;
 
   @ApiPropertyOptional({ example: 'Leite integral pasteurizado' })
   @IsOptional()
@@ -27,7 +27,7 @@ export class CreateProdutoDto {
   @ApiProperty({ example: 4.99 })
   @IsNumber({ maxDecimalPlaces: 2 })
   @IsPositive()
-  preco: number;
+  preco!: number;
 
   @ApiPropertyOptional({ example: 100 })
   @IsOptional()
@@ -49,7 +49,7 @@ export class CreateProdutoDto {
   @ApiProperty({ example: 1, description: 'ID da categoria' })
   @IsInt()
   @IsPositive()
-  categoriaId: number;
+  categoriaId!: number;
 }
 
 export class UpdateProdutoDto {
@@ -98,5 +98,5 @@ export class UpdateProdutoDto {
 export class AtualizarEstoqueDto {
   @ApiProperty({ example: 50, description: 'Quantidade a adicionar ao estoque (use negativo para reduzir)' })
   @IsInt()
-  quantidade: number;
+  quantidade!: number;
 }

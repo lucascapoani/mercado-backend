@@ -13,12 +13,12 @@ export class CreateClienteDto {
   @IsNotEmpty()
   @IsString()
   @MaxLength(150)
-  nome: string;
+  nome!: string;
 
   @ApiProperty({ example: 'joao@email.com' })
   @IsEmail({}, { message: 'Email inválido' })
   @MaxLength(150)
-  email: string;
+  email!: string;
 
   @ApiPropertyOptional({ example: '(11) 99999-9999' })
   @IsOptional()

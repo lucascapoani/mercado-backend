@@ -6,7 +6,7 @@ export class CreateCategoriaDto {
   @IsNotEmpty({ message: 'O nome é obrigatório' })
   @IsString()
   @MaxLength(100)
-  nome: string;
+  nome!: string;
 
   @ApiPropertyOptional({ example: 'Leites, queijos e derivados' })
   @IsOptional()
