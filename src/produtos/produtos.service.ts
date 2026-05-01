@@ -77,7 +77,18 @@ export class ProdutosService {
   }
 
   async remove(id: number): Promise<void> {
-    const produto = await this.findOne(id);
+    const produto = await this.produtoRepository.findOne({
+      where: { id },
+      relations: ['itensPedido'],
+    });
+    if (!produto) {
+      throw new NotFoundException(`Produto #${id} não encontrado`);
+    }
+    if (produto.itensPedido && produto.itensPedido.length > 0) {
+      throw new BadRequestException(
+        `Não é possível remover o produto "${produto.nome}" pois ele está presente em ${produto.itensPedido.length} pedido(s)`,
+      );
+    }
     await this.produtoRepository.remove(produto);
   }
 }

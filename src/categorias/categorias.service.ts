@@ -1,7 +1,8 @@
 import {
+  BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
-  ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -61,6 +62,11 @@ export class CategoriasService {
 
   async remove(id: number): Promise<void> {
     const categoria = await this.findOne(id);
+    if (categoria.produtos && categoria.produtos.length > 0) {
+      throw new BadRequestException(
+        `Não é possível remover a categoria "${categoria.nome}" pois ela possui ${categoria.produtos.length} produto(s) vinculado(s)`,
+      );
+    }
     await this.categoriaRepository.remove(categoria);
   }
 }

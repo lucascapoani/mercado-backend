@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -57,7 +58,18 @@ export class ClientesService {
   }
 
   async remove(id: number): Promise<void> {
-    const cliente = await this.findOne(id);
+    const cliente = await this.clienteRepository.findOne({
+      where: { id },
+      relations: ['pedidos'],
+    });
+    if (!cliente) {
+      throw new NotFoundException(`Cliente #${id} não encontrado`);
+    }
+    if (cliente.pedidos && cliente.pedidos.length > 0) {
+      throw new BadRequestException(
+        `Não é possível remover o cliente "${cliente.nome}" pois ele possui ${cliente.pedidos.length} pedido(s) vinculado(s)`,
+      );
+    }
     await this.clienteRepository.remove(cliente);
   }
 }
