@@ -17,6 +17,7 @@ export class CategoriasService {
   ) {}
 
   async findAll(): Promise<Categoria[]> {
+    console.log('Buscando categorias no banco de dados...');
     return this.categoriaRepository.find({ order: { nome: 'ASC' } });
   }
 

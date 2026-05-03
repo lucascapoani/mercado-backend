@@ -11,8 +11,11 @@ import {
   Post,
   Put,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
+import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { LoggingCacheInterceptor } from '../common/interceptors/logging-cache.interceptor';
 import { ProdutosService } from './produtos.service';
 import {
   AtualizarEstoqueDto,
@@ -27,8 +30,12 @@ export class ProdutosController {
   constructor(private readonly produtosService: ProdutosService) {}
 
   @Get()
+  @UseInterceptors(LoggingCacheInterceptor)
+  @CacheKey('produtos_all')
+  @CacheTTL(10000)
   @ApiOperation({ summary: 'Listar todos os produtos' })
   @ApiQuery({ name: 'apenasAtivos', required: false, type: Boolean })
+  @ApiResponse({ status: 200, description: 'Lista de produtos retornada com sucesso' })
   findAll(@Query('apenasAtivos') apenasAtivos?: string): Promise<Produto[]> {
     return this.produtosService.findAll(apenasAtivos === 'true');
   }

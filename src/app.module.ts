@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CacheModule } from '@nestjs/cache-manager';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CategoriasModule } from './categorias/categorias.module';
@@ -9,6 +10,10 @@ import { PedidosModule } from './pedidos/pedidos.module';
 
 @Module({
   imports: [
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 10000,
+    }),
     TypeOrmModule.forRoot({
       type: 'better-sqlite3',
       database: 'mercado.db',

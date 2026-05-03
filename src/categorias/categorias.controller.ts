@@ -9,8 +9,11 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
+import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { LoggingCacheInterceptor } from '../common/interceptors/logging-cache.interceptor';
 import { CategoriasService } from './categorias.service';
 import { CreateCategoriaDto, UpdateCategoriaDto } from './categoria.dto';
 import { Categoria } from './categoria.entity';
@@ -21,6 +24,9 @@ export class CategoriasController {
   constructor(private readonly categoriasService: CategoriasService) {}
 
   @Get()
+  @UseInterceptors(LoggingCacheInterceptor)
+  @CacheKey('categorias_all')
+  @CacheTTL(10000)
   @ApiOperation({ summary: 'Listar todas as categorias' })
   @ApiResponse({ status: 200, description: 'Lista de categorias retornada com sucesso' })
   findAll(): Promise<Categoria[]> {

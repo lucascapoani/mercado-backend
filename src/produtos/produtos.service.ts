@@ -22,6 +22,7 @@ export class ProdutosService {
   ) {}
 
   async findAll(apenasAtivos = false): Promise<Produto[]> {
+    console.log('Buscando produtos no banco de dados...');
     const where = apenasAtivos ? { ativo: true } : {};
     return this.produtoRepository.find({
       where,
