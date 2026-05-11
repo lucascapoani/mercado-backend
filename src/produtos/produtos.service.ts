@@ -43,7 +43,6 @@ export class ProdutosService {
   }
 
   async create(dto: CreateProdutoDto): Promise<Produto> {
-    // Valida se a categoria existe
     await this.categoriasService.findOne(dto.categoriaId);
     const produto = this.produtoRepository.create({
       ...dto,

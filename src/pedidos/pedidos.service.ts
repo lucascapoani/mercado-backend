@@ -12,7 +12,6 @@ import { StatusPedido } from './status-pedido.enum';
 import { ClientesService } from '../clientes/clientes.service';
 import { ProdutosService } from '../produtos/produtos.service';
 
-// Transições de status permitidas
 const TRANSICOES_VALIDAS: Record<StatusPedido, StatusPedido[]> = {
   [StatusPedido.ABERTO]: [StatusPedido.CONFIRMADO, StatusPedido.CANCELADO],
   [StatusPedido.CONFIRMADO]: [StatusPedido.ENTREGUE, StatusPedido.CANCELADO],
@@ -59,10 +58,8 @@ export class PedidosService {
   }
 
   async create(dto: CreatePedidoDto): Promise<Pedido> {
-    // Valida o cliente
     await this.clientesService.findOne(dto.clienteId);
 
-    // Valida todos os produtos e verifica estoque antes de qualquer alteração
     const produtosMap: Record<number, Awaited<ReturnType<ProdutosService['findOne']>>> = {};
     for (const itemDto of dto.itens) {
       const produto = await this.produtosService.findOne(itemDto.produtoId);
@@ -79,7 +76,6 @@ export class PedidosService {
       produtosMap[produto.id] = produto;
     }
 
-    // Cria o pedido
     const pedido = this.pedidoRepository.create({
       clienteId: dto.clienteId,
       status: StatusPedido.ABERTO,
@@ -88,7 +84,6 @@ export class PedidosService {
     });
     const pedidoSalvo = await this.pedidoRepository.save(pedido);
 
-    // Cria os itens e debita estoque
     let total = 0;
     const itens: ItemPedido[] = [];
     for (const itemDto of dto.itens) {
@@ -105,13 +100,11 @@ export class PedidosService {
       });
       itens.push(await this.itemPedidoRepository.save(item));
 
-      // Debita estoque
       await this.produtosService.atualizarEstoque(produto.id, {
         quantidade: -itemDto.quantidade,
       });
     }
 
-    // Atualiza o total do pedido
     pedidoSalvo.total = total;
     await this.pedidoRepository.save(pedidoSalvo);
 
@@ -132,7 +125,6 @@ export class PedidosService {
       );
     }
 
-    // Ao cancelar, devolve estoque
     if (dto.status === StatusPedido.CANCELADO) {
       for (const item of pedido.itens) {
         await this.produtosService.atualizarEstoque(item.produtoId, {
