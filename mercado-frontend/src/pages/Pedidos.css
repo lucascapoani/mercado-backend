@@ -1,0 +1,105 @@
+@import './Categorias.css';
+
+/* Estilos específicos para Pedidos */
+
+.itens-section {
+  margin-top: 24px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.itens-section h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.itens-lista {
+  margin-top: 16px;
+}
+
+.total-row {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.total-row td {
+  padding: 16px 12px;
+  border-top: 2px solid #dee2e6;
+}
+
+.pedidos-lista {
+  display: grid;
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.pedido-card {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.pedido-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.pedido-info {
+  margin-bottom: 16px;
+}
+
+.pedido-info p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.pedido-itens {
+  margin: 16px 0;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.pedido-itens h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #333;
+  font-size: 14px;
+}
+
+.pedido-itens ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.pedido-itens li {
+  margin: 6px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.pedido-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #dee2e6;
+}
+
+.pedido-actions strong {
+  margin-right: 8px;
+  color: #555;
+}
