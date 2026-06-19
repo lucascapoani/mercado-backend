@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import helmet from 'helmet';
+import compression from 'compression';
 import { AppModule } from './app.module';
 import {
   AllExceptionsFilter,
@@ -9,6 +11,12 @@ import {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Segurança: Headers HTTP seguros (proteção contra XSS, Clickjacking, etc.)
+  app.use(helmet());
+
+  // Performance: Compressão gzip/deflate das respostas HTTP
+  app.use(compression());
 
   // Habilitar CORS para permitir requisições do frontend
   app.enableCors({
