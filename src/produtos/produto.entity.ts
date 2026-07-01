@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  Index,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -9,6 +10,9 @@ import { Categoria } from '../categorias/categoria.entity';
 import { ItemPedido } from '../pedidos/item-pedido.entity';
 
 @Entity('produtos')
+@Index('idx_produto_nome', ['nome'])
+@Index('idx_produto_categoria', ['categoriaId'])
+@Index('idx_produto_ativo', ['ativo'])
 export class Produto {
   @PrimaryGeneratedColumn()
   id!: number;

@@ -1,7 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Pedido } from '../pedidos/pedido.entity';
 
 @Entity('clientes')
+@Index('idx_cliente_nome', ['nome'])
+@Index('idx_cliente_email', ['email'])
+@Index('idx_cliente_ativo', ['ativo'])
 export class Cliente {
   @PrimaryGeneratedColumn()
   id!: number;

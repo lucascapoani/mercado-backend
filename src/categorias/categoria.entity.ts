@@ -1,7 +1,8 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Produto } from '../produtos/produto.entity';
 
 @Entity('categorias')
+@Index('idx_categoria_nome', ['nome'])
 export class Categoria {
   @PrimaryGeneratedColumn()
   id!: number;

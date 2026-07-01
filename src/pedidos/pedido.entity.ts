@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -12,6 +13,9 @@ import { ItemPedido } from './item-pedido.entity';
 import { StatusPedido } from './status-pedido.enum';
 
 @Entity('pedidos')
+@Index('idx_pedido_cliente', ['clienteId'])
+@Index('idx_pedido_status', ['status'])
+@Index('idx_pedido_criado', ['criadoEm'])
 export class Pedido {
   @PrimaryGeneratedColumn()
   id!: number;

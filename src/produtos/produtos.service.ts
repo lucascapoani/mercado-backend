@@ -21,14 +21,40 @@ export class ProdutosService {
     private readonly categoriasService: CategoriasService,
   ) {}
 
-  async findAll(apenasAtivos = false): Promise<Produto[]> {
+  async findAll(
+    apenasAtivos = false,
+    page?: number,
+    limit?: number,
+  ): Promise<{ data: Produto[]; total: number; page: number; lastPage: number }> {
     console.log('Buscando produtos no banco de dados...');
     const where = apenasAtivos ? { ativo: true } : {};
-    return this.produtoRepository.find({
+
+    // Se paginação não foi solicitada, retorna todos
+    if (page === undefined || limit === undefined) {
+      const data = await this.produtoRepository.find({
+        where,
+        relations: ['categoria'],
+        order: { nome: 'ASC' },
+      });
+      return { data, total: data.length, page: 1, lastPage: 1 };
+    }
+
+    // Paginação
+    const skip = (page - 1) * limit;
+    const [data, total] = await this.produtoRepository.findAndCount({
       where,
       relations: ['categoria'],
       order: { nome: 'ASC' },
+      take: limit,
+      skip,
     });
+
+    return {
+      data,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
   }
 
   async findOne(id: number): Promise<Produto> {

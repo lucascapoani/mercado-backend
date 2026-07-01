@@ -35,9 +35,17 @@ export class ProdutosController {
   @CacheTTL(10000)
   @ApiOperation({ summary: 'Listar todos os produtos' })
   @ApiQuery({ name: 'apenasAtivos', required: false, type: Boolean })
+  @ApiQuery({ name: 'page', required: false, type: Number, description: 'Número da página (inicia em 1)' })
+  @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Itens por página' })
   @ApiResponse({ status: 200, description: 'Lista de produtos retornada com sucesso' })
-  findAll(@Query('apenasAtivos') apenasAtivos?: string): Promise<Produto[]> {
-    return this.produtosService.findAll(apenasAtivos === 'true');
+  findAll(
+    @Query('apenasAtivos') apenasAtivos?: string,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ) {
+    const pageNum = page ? parseInt(page, 10) : undefined;
+    const limitNum = limit ? parseInt(limit, 10) : undefined;
+    return this.produtosService.findAll(apenasAtivos === 'true', pageNum, limitNum);
   }
 
   @Get(':id')
